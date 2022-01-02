@@ -4,6 +4,9 @@ import styled from "styled-components";
 //上でreactからimportしてきた名前をReactに変えているのでこの書き方
 const { useState } = React
 
+//localStorageでデータの参照・保存に使うキー名を決定。今回は「ファイルパス：値の名前」の命名規則とした。
+const StorageKey = 'pages/editor:text'
+
 //rem単位
 //ルート要素（通常はhtml要素）のfont-size値を基準として相対的な値となります。
 //html要素のfont-size値はデフォルトでは16px
@@ -50,7 +53,8 @@ const Preview = styled.div`
 `
 
 export const Editor: React.FC = () => {
-	const [text, setText] = useState<string>('')
+	// localStorageから値を取得　localStorage.getItem(key)、こちらはnullを返す場合がある（初回アクセス時など）ので、 || '' をつけて必ず文字列が入るようにする。
+	const [text, setText] = useState<string>(localStorage.getItem(StorageKey) || '')
 	return (
 		<>
 		<Header>
@@ -59,7 +63,10 @@ export const Editor: React.FC = () => {
 		<Wrapper>
 			<TextArea 
 				onChange={(event) => {
-					setText(event.target.value)
+					const changedText = event.target.value
+					// localStorageに値を保存 localStorage.setItem(key, val)
+					localStorage.setItem(StorageKey, changedText)
+					setText(changedText)
 				}}
 				value={text}/>
 			<Preview>プレビューエリア</Preview>

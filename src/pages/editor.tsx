@@ -1,8 +1,8 @@
 import * as React from "react";
 import styled from "styled-components";
+import { useStateWithStorage } from "../hooks/use_state_with_storage";
 
-//上でreactからimportしてきた名前をReactに変えているのでこの書き方
-const { useState } = React
+
 
 //localStorageでデータの参照・保存に使うキー名を決定。今回は「ファイルパス：値の名前」の命名規則とした。
 const StorageKey = 'pages/editor:text'
@@ -53,8 +53,7 @@ const Preview = styled.div`
 `
 
 export const Editor: React.FC = () => {
-	// localStorageから値を取得　localStorage.getItem(key)、こちらはnullを返す場合がある（初回アクセス時など）ので、 || '' をつけて必ず文字列が入るようにする。
-	const [text, setText] = useState<string>(localStorage.getItem(StorageKey) || '')
+	const [text, setText] = useStateWithStorage('', StorageKey)
 	return (
 		<>
 		<Header>
@@ -63,10 +62,7 @@ export const Editor: React.FC = () => {
 		<Wrapper>
 			<TextArea 
 				onChange={(event) => {
-					const changedText = event.target.value
-					// localStorageに値を保存 localStorage.setItem(key, val)
-					localStorage.setItem(StorageKey, changedText)
-					setText(changedText)
+					setText(event.target.value)
 				}}
 				value={text}/>
 			<Preview>プレビューエリア</Preview>

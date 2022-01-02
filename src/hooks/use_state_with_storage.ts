@@ -5,6 +5,7 @@ import { useState} from 'react'
 //カスタムフックはuseから始める慣習がある
 //init: stringは初期値でuseState の引数と同じ、key: stringはlocalStorageに保存する際のキー、[string, (s: string) => void] はカスタムフックの戻り値で、useState の戻り値と同じ型
 export const useStateWithStorage = (init: string, key: string):[string, (s: string) => void] => {
+	// localStorageから値を取得　localStorage.getItem(key)、こちらはnullを返す場合がある（初回アクセス時など）ので、 || init をつけて必ず文字列が入るようにする。
 	const [value, setValue] = useState<string>(localStorage.getItem(key) || init)
 
 	//localStorageへの保存を組み合わせた値の更新関数を作成

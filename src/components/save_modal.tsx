@@ -49,7 +49,7 @@ export const SaveModal: React.FC<Props> = props => {
 				<p>保存内容のタイトルを入力して「保存」ボタンを押してください。</p>
 				<p>
 				<TitleInput
-				type={title}
+				value={title}
 				onChange={(event) => setTitle(event.target.value)} />
 				</p>
 				<Control>

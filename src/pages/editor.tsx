@@ -19,6 +19,7 @@ const StorageKey = 'pages/editor:text'
 //ルート要素（通常はhtml要素）のfont-size値を基準として相対的な値となります。
 //html要素のfont-size値はデフォルトでは16px
 const Wrapper = styled.div`
+	bottom: 0;
 	left: 0;
 	position: fixed;
 	right: 0;

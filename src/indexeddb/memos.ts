@@ -22,3 +22,9 @@ export const putMemo = async (title: string, text: string): Promise<void> => {
 	//IndexedDB 保存
 	await memos.put({datetime, title, text})
 }
+
+export const getMemos = (): Promise<MemoRecord[]> => {
+	return memos.orderBy('datetime')
+	.reverse() //datetime（保存した日時）の昇順（古い順）で取得
+	.toArray()
+}

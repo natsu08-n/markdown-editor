@@ -5,6 +5,12 @@ import {
 } from 'react-router-dom'
 import styled from 'styled-components'
 import { Header } from '../components/header'
+import {
+	getMemos,
+	MemoRecord,
+} from '../indexeddb/memos'
+
+const { useState, useEffect } = React
 
 const HeaderArea = styled.div`
 	position: fixed;
@@ -23,6 +29,14 @@ const Wrapper= styled.div`
 `
 
 export const History: React.FC = () => {
+
+	const [memos, setMemos] = useState<MemoRecord[]>([])
+	console.log(memos);
+
+	//useEffectは副作用フック、第一引数に実行したい関数(つまりgetMemos)を渡してその非同期処理が終わったら取得したテキスト履歴をsetMemosに渡して更新している
+	useEffect(() => {
+		getMemos().then(setMemos)
+	}, [])
 
 	return (
 		<>

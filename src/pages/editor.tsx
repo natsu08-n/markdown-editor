@@ -11,9 +11,10 @@ import { Header } from '../components/header'
 const { useState } = React;
 
 
-
-//localStorageでデータの参照・保存に使うキー名を決定。今回は「ファイルパス：値の名前」の命名規則とした。
-const StorageKey = 'pages/editor:text'
+interface Props {
+	text: string
+	setText: (text: string) => void
+}
 
 //rem単位
 //ルート要素（通常はhtml要素）のfont-size値を基準として相対的な値となります。
@@ -56,8 +57,8 @@ const Preview = styled.div`
 	width: 50vw;
 `
 
-export const Editor: React.FC = () => {
-	const [text, setText] = useStateWithStorage('', StorageKey)
+export const Editor: React.FC<Props> = (props) => {
+	const {text, setText} = props
 
 	//モーダルのフラグ管理（初期状態ではモーダルを出さないのでデフォルト値false）
 	const [showModal, setShowModal] = useState(false)
